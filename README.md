@@ -2,7 +2,7 @@
 # CycleGAN
 **[[Project]](https://people.eecs.berkeley.edu/~junyanz/projects/CycleGAN/)**   **[[Arxiv]](https://junyanz.github.io/CycleGAN/CycleGAN.pdf)**
 
-Torch implementation for learning an image-to-image translation (i.e. pix2pix) without input-output pairs, for example:
+Torch implementation for learning an image-to-image translation (i.e. **pix2pix**) without input-output pairs, for example:
 
 
 
@@ -12,7 +12,7 @@ Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks
  [Jun-Yan Zhu](https://people.eecs.berkeley.edu/~junyanz/)\*,  [Taesung Park](https://taesung.me/)\*, [Phillip Isola](http://web.mit.edu/phillipi/), [Alexei A. Efros](https://people.eecs.berkeley.edu/~efros/)  
  In arxiv, 2017. (* equal contributions)  
 
-PyTorch version is coming soon (By April 3rd).
+PyTorch version is coming soon (By April 7th).
 ## Applications
 ### Monet Paintings to Photos
 <img src="imgs/painting2photo.jpg" width="900px"/>
@@ -120,6 +120,7 @@ bash ./models/download_model.sh model_name
 For example, to generate Ukiyo-e style images using the pre-trained model,
 
 ```
+bash ./datasets/download_dataset.ukiyoe2photo
 bash ./models/download_model.sh style_ukiyoe
 mkdir ./checkpoints/ukiyoe2photo_pretrained
 mv ./models/style_ukiyoe.t7 ./checkpoints/ukiyoe2photo_pretrained/latest_net_G.t7
