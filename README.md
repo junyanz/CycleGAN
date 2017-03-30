@@ -104,7 +104,9 @@ bash ./datasets/download_dataset.sh dataset_name
 - `horse2zebra`: 939 horse images and 1177 zebra images downloaded from [ImageNet](http://www.image-net.org/) using keywords `wild horse` and `zebra`
 - `apple2orange`: 996 apple images and 1020 orange images downloaded from [ImageNet](http://www.image-net.org/) using keywords `apple` and `navel orange`.
 - `summer2winter_yosemite`: 1273 summer Yosemite images and 854 winter Yosemite images were downloaded using Flickr API. See more details in our paper.
-- `monet2photo`, `vangogh2photo`, `ukiyoe2photo`, `cezanne2photo`: The art images were downloaded from [Wikiart](https://www.wikiart.org/). The real photos are downloaded from Flickr using combination of tags *landscape* and *landscapephotography*. The training set size of each class was Monet:1074, Cezanne:584, Van Gogh:401, Ukiyo-e:1433, Photographs:6853. See more details in our paper.
+- `monet2photo`, `vangogh2photo`, `ukiyoe2photo`, `cezanne2photo`: The art images were downloaded from [Wikiart](https://www.wikiart.org/). The real photos are downloaded from Flickr using combination of tags *landscape* and *landscapephotography*. The training set size of each class is Monet:1074, Cezanne:584, Van Gogh:401, Ukiyo-e:1433, Photographs:6853. 
+- `iphone2dslr_flower`: both classe of images were downlaoded from Flickr. The training set size of each class is iPhone:1813, DSLR:3316. See more details in our paper.
+
 ## Pre-trained Models
 Download the pre-trained models with the following script. You need to rename the model (e.g. `orange2apple` to `/checkpoints/orange2apple/latest_net_G.t7`) after the download has finished.
 ```bash
@@ -116,6 +118,7 @@ bash ./models/download_model.sh model_name
 - `monet2photo` (Monet paintings -> real landscape): trained on paintings and Flickr landscape photos.
 - `cityscapes_photo2label` (street scene -> label) and `cityscapes_label2photo` (label -> street scene): trained on the Cityscapes dataset.
 - `map2sat` (map -> aerial photo) and `sat2map` (aerial photo -> map): trained on Google maps.
+- `iphone2dslr_flower` (iPhone photos of flower -> DSLR photos of flower): trained on Flickr photos. 
 
 For example, to generate Ukiyo-e style images using the pre-trained model,
 
