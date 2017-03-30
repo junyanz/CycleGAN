@@ -1,6 +1,6 @@
 
 # CycleGAN
-**[[Project]](https://people.eecs.berkeley.edu/~junyanz/projects/CycleGAN/)**   **[[Arxiv]](https://junyanz.github.io/CycleGAN/CycleGAN.pdf)**
+### [[Project]](https://junyanz.github.io/CycleGAN/)   [[Arxiv]](https://junyanz.github.io/CycleGAN/CycleGAN.pdf)
 
 Torch implementation for learning an image-to-image translation (i.e. **pix2pix**) without input-output pairs, for example:
 
@@ -12,7 +12,7 @@ Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks
  [Jun-Yan Zhu](https://people.eecs.berkeley.edu/~junyanz/)\*,  [Taesung Park](https://taesung.me/)\*, [Phillip Isola](http://web.mit.edu/phillipi/), [Alexei A. Efros](https://people.eecs.berkeley.edu/~efros/)  
  In arxiv, 2017. (* equal contributions)  
 
-PyTorch version is coming soon (By April 7th).
+PyTorch version is coming soon (by April 7th).
 ## Applications
 ### Monet Paintings to Photos
 <img src="imgs/painting2photo.jpg" width="900px"/>
