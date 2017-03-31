@@ -1,13 +1,13 @@
 
 # CycleGAN
 ### [[Project]](https://junyanz.github.io/CycleGAN/)   [[Paper]](https://arxiv.org/pdf/1703.10593.pdf)
-from Berkeley AI Research (BAIR) Laboratory.  
+from Berkeley AI Research ([BAIR](http://bair.berkeley.edu/)) Lab.
 
 Torch implementation for learning an image-to-image translation (i.e. **pix2pix**) without input-output pairs, for example:
 
 
 
-<img src="imgs/teaser.jpg" width="900px"/>
+<img src="imgs/teaser.jpg" width="1000px"/>
 
 Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks  
  [Jun-Yan Zhu](https://people.eecs.berkeley.edu/~junyanz/)\*,  [Taesung Park](https://taesung.me/)\*, [Phillip Isola](http://web.mit.edu/phillipi/), [Alexei A. Efros](https://people.eecs.berkeley.edu/~efros/)  
@@ -16,19 +16,19 @@ Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks
 PyTorch version is coming soon (by April 7th).
 ## Applications
 ### Monet Paintings to Photos
-<img src="imgs/painting2photo.jpg" width="900px"/>
+<img src="imgs/painting2photo.jpg" width="1000px"/>
 
 ### Collection Style Transfer
-<img src="imgs/photo2painting.jpg" width="900px"/>
+<img src="imgs/photo2painting.jpg" width="1000px"/>
 
 ### Object Transfiguration
-<img src="imgs/objects.jpg" width="900px"/>
+<img src="imgs/objects.jpg" width="1000px"/>
 
 ### Season Transfer
-<img src="imgs/season.jpg" width="900px"/>
+<img src="imgs/season.jpg" width="1000px"/>
 
 ### Photo Enhancement: iPhone photo to DSLR photo
-<img src="imgs/photo_enhancement.jpg" width="900px"/>
+<img src="imgs/photo_enhancement.jpg" width="1000px"/>
 
 ## Setup
 
