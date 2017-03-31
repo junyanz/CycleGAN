@@ -1,7 +1,7 @@
 
 # CycleGAN
-### [[Project]](https://junyanz.github.io/CycleGAN/)   [[Paper]](https://arxiv.org/pdf/1703.10593.pdf)
-from Berkeley AI Research ([BAIR](http://bair.berkeley.edu/)) Lab.
+### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
+
 
 Torch implementation for learning an image-to-image translation (i.e. **pix2pix**) without input-output pairs, for example:
 
@@ -9,11 +9,14 @@ Torch implementation for learning an image-to-image translation (i.e. **pix2pix*
 
 <img src="imgs/teaser.jpg" width="1000px"/>
 
-Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks  
+[Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://junyanz.github.io/CycleGAN/)  
  [Jun-Yan Zhu](https://people.eecs.berkeley.edu/~junyanz/)\*,  [Taesung Park](https://taesung.me/)\*, [Phillip Isola](http://web.mit.edu/phillipi/), [Alexei A. Efros](https://people.eecs.berkeley.edu/~efros/)  
+ Berkeley AI Research Lab, UC Berkeley  
  In arxiv, 2017. (* equal contributions)  
 
-PyTorch version is coming soon (by April 7th).
+This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), as well as other methods like [BiGAN](https://arxiv.org/abs/1605.09782)/[ALI](https://ishmaelbelghazi.github.io/ALI/) and Apple's paper [S+U learning](https://arxiv.org/pdf/1612.07828.pdf).  
+**PyTorch** version is coming soon (by April 7th).
+
 ## Applications
 ### Monet Paintings to Photos
 <img src="imgs/painting2photo.jpg" width="1000px"/>
@@ -148,13 +151,13 @@ Then open `http://(hostname):(port)/` in your browser to load the remote desktop
 
 
 ## Citation
-If you use this code for your research, please cite our [paper](todo):
+If you use this code for your research, please cite our [paper](https://junyanz.github.io/CycleGAN/):
 
 ```
 @article{CycleGAN2017,
   title={Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networkss},
   author={Zhu, Jun-Yan and Park, Taesung and Isola, Phillip and Efros, Alexei A},
-  journal={arxiv},
+  journal={arXiv preprint arXiv:1703.10593},
   year={2017}
 }
 ```

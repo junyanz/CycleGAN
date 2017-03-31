@@ -35,18 +35,18 @@ local opt_train = {
    serial_batches = 0,          -- if 1, takes images in order to make batches, otherwise takes them randomly
    checkpoints_dir = './checkpoints', -- models are saved here
    cudnn = 1,                         -- set to 0 to not use cudnn
-   which_model_netD = 'basic', -- selects model to use for netD
+   which_model_netD = 'basic',        -- selects model to use for netD
    which_model_netG = 'resnet_6blocks',   -- selects model to use for netG
-   norm = 'instance',            -- batch or instance normalization
-   n_layers_D = 3,               -- only used if which_model_netD=='n_layers'
+   norm = 'instance',             -- batch or instance normalization
+   n_layers_D = 3,                -- only used if which_model_netD=='n_layers'
    content_loss = 'pixel',        -- content loss type: L1, conv-layer, edge
    layer_name = 'pixel',          -- layer used in content loss
-   lambda_A = 10.0,              -- weight for cycle loss (A -> B -> A)
-   lambda_B = 10.0,              -- weight for cycle loss (B -> A -> B)
-   model = 'cycle_gan',            -- which mode to run. 'cycle_gan', 'pix2pix', 'bigan', 'content_gan'
-   use_lsgan = 1,                -- if 1, use least square GAN, if 0, use vanilla GAN
-   align_data = 0,               -- if > 0, use the dataloader for where the images are aligned
-   pool_size = 50,               -- the size of image buffer that stores previously generated images
+   lambda_A = 10.0,               -- weight for cycle loss (A -> B -> A)
+   lambda_B = 10.0,               -- weight for cycle loss (B -> A -> B)
+   model = 'cycle_gan',           -- which mode to run. 'cycle_gan', 'pix2pix', 'bigan', 'content_gan'
+   use_lsgan = 1,                 -- if 1, use least square GAN, if 0, use vanilla GAN
+   align_data = 0,                -- if > 0, use the dataloader for where the images are aligned
+   pool_size = 50,                -- the size of image buffer that stores previously generated images
    resize_or_crop='resize_and_crop',  -- resizing/cropping strategy
    identity = 0,                  -- use identity mapping
 }
@@ -57,28 +57,27 @@ opt_test = {
   batchSize = 1,            -- # images in batch
   loadSize = 256,           -- scale images to this size
   fineSize = 256,           --  then crop to this size
-  flip = 0,                   -- horizontal mirroring data augmentation
+  flip = 0,                  -- horizontal mirroring data augmentation
   display = 1,              -- display samples while training. 0 = false
   display_id = 200,         -- display window id.
   gpu = 1,                  -- gpu = 0 is CPU mode. gpu=X is GPU mode on GPU X
   how_many = 'all',         -- how many test images to run (set to all to run on every image found in the data/phase folder)
-  phase = 'val',          -- train, val, test ,etc for A
+  phase = 'val',            -- train, val, test, etc
   preprocess = 'regular',   -- for special purpose preprocessing, e.g., for colorization, change this (selects preprocessing functions in util.lua)
   aspect_ratio = 1.0,       -- aspect ratio of result images
-  norm = 'instance',          -- batchnorm or isntance norm
+  norm = 'instance',        -- batchnorm or isntance norm
   name = '',                -- name of experiment, selects which model to run, should generally should be passed on command line
-  input_nc = 3,             -- #  of input image channels
-  output_nc = 3,            -- #  of output image channels
-  serial_batches = 1,       -- if 1, takes images in order to make batches, otherwise takes them randomly
-  cudnn = 1,                -- set to 0 to not use cudnn (untested)
+  input_nc = 3,              -- #  of input image channels
+  output_nc = 3,             -- #  of output image channels
+  serial_batches = 1,        -- if 1, takes images in order to make batches, otherwise takes them randomly
+  cudnn = 1,                 -- set to 0 to not use cudnn (untested)
   checkpoints_dir = './checkpoints', -- loads models from here
   results_dir='./results/',          -- saves results here
   which_epoch = 'latest',            -- which epoch to test? set to 'latest' to use latest cached model
-  model = 'cycle_gan', -- which mode to run. 'cycle_consistency' or 'autoencoder_gan'
-  align_data = 0,              -- if > 0, use the dataloader for pix2pix
-  which_direction = 'AtoB',
-  resize_or_crop = 'resize_and_crop',
-  identity = 0,
+  model = 'cycle_gan',               -- which mode to run. 'cycle_gan', 'pix2pix', 'bigan', 'content_gan'; to use pretrained model, select `one_direction_test`
+  align_data = 0,                    -- if > 0, use the dataloader for pix2pix
+  which_direction = 'AtoB',          -- AtoB or BtoA
+  resize_or_crop = 'resize_and_crop',  -- resizing/cropping strategy
 }
 
 --------------------------------------------------------------------------------
