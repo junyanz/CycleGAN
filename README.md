@@ -127,7 +127,7 @@ bash ./models/download_model.sh model_name
 For example, to generate Ukiyo-e style images using the pre-trained model,
 
 ```
-bash ./datasets/download_dataset.ukiyoe2photo
+bash ./datasets/download_dataset.sh ukiyoe2photo
 bash ./models/download_model.sh style_ukiyoe
 mkdir ./checkpoints/ukiyoe2photo_pretrained
 mv ./models/style_ukiyoe.t7 ./checkpoints/ukiyoe2photo_pretrained/latest_net_G.t7
