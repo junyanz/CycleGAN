@@ -127,7 +127,7 @@ bash ./models/download_model.sh model_name
 For example, to generate Ukiyo-e style images using the pre-trained model,
 
 ```
-bash ./datasets/download_dataset.ukiyoe2photo
+bash ./datasets/download_dataset.sh ukiyoe2photo
 bash ./models/download_model.sh style_ukiyoe
 mkdir ./checkpoints/ukiyoe2photo_pretrained
 mv ./models/style_ukiyoe.t7 ./checkpoints/ukiyoe2photo_pretrained/latest_net_G.t7
@@ -136,16 +136,6 @@ DATA_ROOT=./datasets/ukiyoe2photo name=ukiyoe2photo_pretrained which_direction='
 
 Please pay attention to the direction. `which_direction='BtoA'` was used because the pretrained network transforms photos to Ukiyo-e-style images, but the dataset `ukiyoe2photo` is from Ukiyo-e paintings to photos. `model=one_direction_test` loads the code that generates outputs of the trained network in only one direction.
 
-
-
-## Setup Training and Test data
-To train CycleGAN model on your own datasets, you need to create a directory with subdirectories `trainA` and `trainB` that contain images from domain A and B. You can test your model on your training set by setting ``phase='train'`` in  `test.lua`. You can also create subdirectories like `testA` and `testB` if you have additional test data.
-
-You should **not** expect our method to work on any combination of two random datasets (e.g. cats <-> keyboards). From our experiments, we find it works better if two datasets share similar visual content. For example, landscape painting <-> landscape photographs works much better than portrait painting <-> landscape photos. Zebras <-> l horses achieves compelling results while cats <-> l dogs completely fails.  See the following section for more discussion.
-
-
-## Failure cases
-Several typical failure cases are shown [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. We also observe a lingering gap between the results achievable with paired training data and those achieved by our unpaired method. In some cases, this gap may be very hard -- or even impossible,-- to close: for example, our method sometimes permutes the labels for tree and building in the output of the cityscapes photos->labels task.
 
 
 ## Display UI
@@ -160,6 +150,16 @@ By default, the server listens on localhost. Pass `0.0.0.0` to allow external co
 th -ldisplay.start 8000 0.0.0.0
 ```
 Then open `http://(hostname):(port)/` in your browser to load the remote desktop.
+
+## Setup Training and Test data
+To train CycleGAN model on your own datasets, you need to create a data folder with two subdirectories `trainA` and `trainB` that contain images from domain A and B. You can test your model on your training set by setting ``phase='train'`` in  `test.lua`. You can also create subdirectories like `testA` and `testB` if you have additional test data.
+
+You should **not** expect our method to work on any combination of two random datasets (e.g. `cats<->keyboards`). From our experiments, we find it works better if two datasets share similar visual content. For example, `landscape painting<->landscape photographs` works much better than `portrait painting <-> landscape photographs`. `zebras<->horses` achieves compelling results while `cats<->dogs` completely fails.  See the following section for more discussion.
+
+
+## Failure cases
+Several typical failure cases are shown [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. We also observe a lingering gap between the results achievable with paired training data and those achieved by our unpaired method. In some cases, this gap may be very hard -- or even impossible,-- to close: for example, our method sometimes permutes the labels for tree and building in the output of the cityscapes photos->labels task.
+
 
 
 ## Citation
