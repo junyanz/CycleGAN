@@ -3,7 +3,7 @@
 ### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
 
 
-Torch implementation for learning an image-to-image translation (i.e. **pix2pix**) without input-output pairs, for example:
+Torch implementation for learning an image-to-image translation (i.e. [pix2pix](https://github.com/phillipi/pix2pix)) **without** input-output pairs, for example:
 
 
 
@@ -19,19 +19,19 @@ This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), 
 
 ## Applications
 ### Monet Paintings to Photos
-<img src="imgs/painting2photo.jpg" width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/painting2photo.jpg" width="1000px"/>
 
 ### Collection Style Transfer
-<img src="imgs/photo2painting.jpg" width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/photo2painting.jpg width="1000px"/>
 
 ### Object Transfiguration
-<img src="imgs/objects.jpg" width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/objects.jpg" width="1000px"/>
 
 ### Season Transfer
-<img src="imgs/season.jpg" width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/season.jpg" width="1000px"/>
 
 ### Photo Enhancement: iPhone photo to DSLR photo
-<img src="imgs/photo_enhancement.jpg" width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/photo_enhancement.jpg" width="1000px"/>
 
 ## Setup
 
@@ -135,6 +135,17 @@ DATA_ROOT=./datasets/ukiyoe2photo name=ukiyoe2photo_pretrained which_direction='
 ```
 
 Please pay attention to the direction. `which_direction='BtoA'` was used because the pretrained network transforms photos to Ukiyo-e-style images, but the dataset `ukiyoe2photo` is from Ukiyo-e paintings to photos. `model=one_direction_test` loads the code that generates outputs of the trained network in only one direction.
+
+
+
+## Setup Training and Test data
+To train CycleGAN model on your own datasets, you need to create a directory with subdirectories `trainA` and `trainB` that contain images from domain A and B. You can test your model on your training set by setting ``phase='train'`` in  `test.lua`. You can also create subdirectories like `testA` and `testB` if you have additional test data.
+
+You should **not** expect the model to work on any combination of two datasets. From our experience, we find it works better if both datasets share some similar visual content. For example, landscape painting $$\leftrightarrow$$ landscape photographs works much better than portrait painting $$\leftrightarrow$$ landscape photos. Zebras $$\leftrightarrow$$ horses achieves compelling results while cats$$\leftrightarrow$$ dogs completely fails.  See [Failure cases](##Failure_cases) for more discussion.
+
+
+## Failure cases
+Several typical failure cases are shown [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. Handling more varied and extreme transformations, especially geometric changes, is an important problem for future work.
 
 ## Display UI
 Optionally, for displaying images during training and test, use the [display package](https://github.com/szym/display).

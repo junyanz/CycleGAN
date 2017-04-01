@@ -62,7 +62,7 @@ opt_test = {
   display_id = 200,         -- display window id.
   gpu = 1,                  -- gpu = 0 is CPU mode. gpu=X is GPU mode on GPU X
   how_many = 'all',         -- how many test images to run (set to all to run on every image found in the data/phase folder)
-  phase = 'val',            -- train, val, test, etc
+  phase = 'test',            -- train, val, test, etc
   preprocess = 'regular',   -- for special purpose preprocessing, e.g., for colorization, change this (selects preprocessing functions in util.lua)
   aspect_ratio = 1.0,       -- aspect ratio of result images
   norm = 'instance',        -- batchnorm or isntance norm
