@@ -102,7 +102,7 @@ Download the datasets using the following script:
 ```bash
 bash ./datasets/download_dataset.sh dataset_name
 ```
-
+- `facades`: 400 images from the [CMP Facades dataset](http://cmp.felk.cvut.cz/~tylecr1/facade/).
 - `cityscapes`: 2975 images from the [Cityscapes training set](https://www.cityscapes-dataset.com/).
 - `maps`: 1096 training images scraped from Google Maps.
 - `horse2zebra`: 939 horse images and 1177 zebra images downloaded from [ImageNet](http://www.image-net.org/) using keywords `wild horse` and `zebra`
@@ -116,10 +116,10 @@ Download the pre-trained models with the following script. You need to rename th
 ```bash
 bash ./models/download_model.sh model_name
 ```
-- `orange2apple` (orange -> apple) and `apple2orange`: trained on the CMP Facades dataset.
-- `horse2zebra` (horse -> zebra) and `zebra2horse` (zebra -> horse): trained on the CMP Facades dataset.
+- `orange2apple` (orange -> apple) and `apple2orange`: trained on ImageNet categories `apple` and `orange`.
+- `horse2zebra` (horse -> zebra) and `zebra2horse` (zebra -> horse): trained on ImageNet categories `horse` and `zebra`.
 - `style_monet` (landscape photo -> Monet painting style),  `style_vangogh` (landscape photo  -> Van Gogh painting style), `style_ukiyoe` (landscape photo  -> Ukiyo-e painting style), `style_cezanne` (landscape photo  -> Cezanne painting style): trained on paintings and Flickr landscape photos.
-- `monet2photo` (Monet paintings -> real landscape): trained on paintings and Flickr landscape photos.
+- `monet2photo` (Monet paintings -> real landscape): trained on paintings and Flickr landscape photographs.
 - `cityscapes_photo2label` (street scene -> label) and `cityscapes_label2photo` (label -> street scene): trained on the Cityscapes dataset.
 - `map2sat` (map -> aerial photo) and `sat2map` (aerial photo -> map): trained on Google maps.
 - `iphone2dslr_flower` (iPhone photos of flower -> DSLR photos of flower): trained on Flickr photos.
@@ -141,11 +141,12 @@ Please pay attention to the direction. `which_direction='BtoA'` was used because
 ## Setup Training and Test data
 To train CycleGAN model on your own datasets, you need to create a directory with subdirectories `trainA` and `trainB` that contain images from domain A and B. You can test your model on your training set by setting ``phase='train'`` in  `test.lua`. You can also create subdirectories like `testA` and `testB` if you have additional test data.
 
-You should **not** expect the model to work on any combination of two datasets. From our experience, we find it works better if both datasets share some similar visual content. For example, landscape painting $$\leftrightarrow$$ landscape photographs works much better than portrait painting $$\leftrightarrow$$ landscape photos. Zebras $$\leftrightarrow$$ horses achieves compelling results while cats$$\leftrightarrow$$ dogs completely fails.  See [Failure cases](##Failure_cases) for more discussion.
+You should **not** expect our method to work on any combination of two random datasets (e.g. cats <-> keyboards). From our experiments, we find it works better if two datasets share similar visual content. For example, landscape painting <-> landscape photographs works much better than portrait painting <-> landscape photos. Zebras <-> l horses achieves compelling results while cats <-> l dogs completely fails.  See the following section for more discussion.
 
 
 ## Failure cases
-Several typical failure cases are shown [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. Handling more varied and extreme transformations, especially geometric changes, is an important problem for future work.
+Several typical failure cases are shown [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. We also observe a lingering gap between the results achievable with paired training data and those achieved by our unpaired method. In some cases, this gap may be very hard -- or even impossible,-- to close: for example, our method sometimes permutes the labels for tree and building in the output of the cityscapes photos->labels task.
+
 
 ## Display UI
 Optionally, for displaying images during training and test, use the [display package](https://github.com/szym/display).
