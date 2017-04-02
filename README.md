@@ -22,7 +22,7 @@ This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), 
 <img src="https://junyanz.github.io/CycleGAN/images/painting2photo.jpg" width="1000px"/>
 
 ### Collection Style Transfer
-<img src="https://junyanz.github.io/CycleGAN/images/photo2painting.jpg width="1000px"/>
+<img src="https://junyanz.github.io/CycleGAN/images/photo2painting.jpg" width="1000px"/>
 
 ### Object Transfiguration
 <img src="https://junyanz.github.io/CycleGAN/images/objects.jpg" width="1000px"/>
