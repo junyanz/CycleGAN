@@ -5,4 +5,4 @@ echo "Note: available models are apple2orange, facades_photo2label, map2sat, ora
 echo "Specified [$FILE]"
 
 URL=https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/models/$FILE.t7
-wget $URL -O ./models/$FILE.t7
+wget --no-check-certificate $URL -O ./models/$FILE.t7
