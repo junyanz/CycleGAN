@@ -166,10 +166,10 @@ function CycleGANModel:fGx_basic(x, gradParams, netG, netD, netE, real, real2, r
   -- G should be identity if real2 is fed.
   local errI = nil
   local identity = nil
-  if opt.identity == 1 then
+  if opt.identity > 0 then
     identity = netG:forward(real2):clone()
-    errI = self.criterionRec:forward(identity, real2)*lambda2
-    local didentity_loss_do = self.criterionRec:backward(identity, real2):mul(lambda2)
+    errI = self.criterionRec:forward(identity, real2)*lambda2*opt.identity
+    local didentity_loss_do = self.criterionRec:backward(identity, real2):mul(lambda2):mul(opt.identity)
     netG:backward(real2, didentity_loss_do)
   end
 
