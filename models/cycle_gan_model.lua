@@ -266,7 +266,7 @@ end
 
 -- returns a string that describes the display plot configuration
 function CycleGANModel:DisplayPlot(opt)
-  if opt.identity == 1 then
+  if opt.identity > 0 then
     return 'errG_A,errD_A,errRec_A,errI_A,errG_B,errD_B,errRec_B,errI_B'
   else
     return 'errG_A,errD_A,errRec_A,errG_B,errD_B,errRec_B'
@@ -302,13 +302,13 @@ function CycleGANModel:GetCurrentVisuals(opt, size)
   table.insert(visuals, {img=MakeIm3(self.real_A), label='real_A'})
   table.insert(visuals, {img=MakeIm3(self.fake_B), label='fake_B'})
   table.insert(visuals, {img=MakeIm3(self.rec_A), label='rec_A'})
-  if opt.identity == 1 then
+  if opt.identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_A), label='identity_A'})
   end
   table.insert(visuals, {img=MakeIm3(self.real_B), label='real_B'})
   table.insert(visuals, {img=MakeIm3(self.fake_A), label='fake_A'})
   table.insert(visuals, {img=MakeIm3(self.rec_B), label='rec_B'})
-  if opt.identity == 1 then
+  if opt.identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_B), label='identity_B'})
   end
   return visuals
