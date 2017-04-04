@@ -40,6 +40,7 @@ This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), 
 - NVIDIA GPU + CUDA CuDNN (CPU mode and CUDA without CuDNN may work with minimal modification, but untested)
 
 ## Getting Started
+### Installation
 - Install torch and dependencies from https://github.com/torch/distro
 - Install torch packages `nngraph`, `class`, `display`
 ```bash
@@ -53,7 +54,7 @@ git clone https://github.com/junyanz/CycleGAN
 cd CycleGAN
 ```
 
-### Apply Pre-trained Models
+### Apply a Pre-trained Model
 - Download the test photos (taken by [Alexei Efros](https://www.flickr.com/photos/aaefros)):
 ```
 bash ./datasets/download_dataset.sh ae_photos
@@ -111,21 +112,21 @@ bash ./models/download_model.sh model_name
 
 
 ## Training and Test Details
-- To train a model,  
+To train a model,  
 ```bash
 DATA_ROOT=/path/to/data/ name=expt_name th train.lua
 ```
-- Models are saved to `./checkpoints/expt_name` (can be changed by passing `checkpoint_dir=your_dir` in train.lua).  
+Models are saved to `./checkpoints/expt_name` (can be changed by passing `checkpoint_dir=your_dir` in train.lua).  
 See `opt_train` in `options.lua` for additional training options.
 
-- To test the model,
+To test the model,
 ```bash
 DATA_ROOT=/path/to/data/ name=expt_name which_direction='AtoB' phase=test th test.lua
 ```
-This will run the model named `expt_name` in both directions on all images in `/path/to/data/testA` and `/path/to/data/testB`.
+This will run the model named `expt_name` in both directions on all images in `/path/to/data/testA` and `/path/to/data/testB`.  
 If `which_direction` is 'BtoA', the two sets A and B of the datasets are flipped.
-- Result images, and a webpage to view them, are saved to `./results/expt_name` (can be changed by passing `results_dir=your_dir` in test.lua).
-- See `opt_test` in `options.lua` for additional test options. Please use `model=one_direction_test` if you only would like to generate outputs of the trained network in only one direction.
+Result images, and a webpage to view them, are saved to `./results/expt_name` (can be changed by passing `results_dir=your_dir` in test.lua).  
+See `opt_test` in `options.lua` for additional test options. Please use `model=one_direction_test` if you only would like to generate outputs of the trained network in only one direction.
 
 
 
