@@ -1,7 +1,7 @@
 
-<img src='imgs/horse2zebra.gif' align="right" width=384>
+<img src='imgs/horse2zebra.gif' align="right" width=300>
 
-<br> <br>
+<br> <br> <br>
 # CycleGAN
 ### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
 
