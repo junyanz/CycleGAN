@@ -36,7 +36,11 @@ function OneDirectionTestModel:Forward(input, opt)
   	input.real_A = input.real_B:clone()
   end
 
-  self.real_A:copy(input.real_A)
+  self.real_A = input.real_A:clone()
+  if opt.gpu > 0 then
+    self.real_A = self.real_A:cuda()
+  end
+
   self.fake_B = self.netG_A:forward(self.real_A):clone()
 end
 
