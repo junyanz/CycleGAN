@@ -107,6 +107,7 @@ function options.parse_options(mode)
   if mode == 'test' then
     opt.nThreads = 1
     opt.continue_train = 1
+    opt.batchSize = 1  -- test code only supports batchSize=1
   end
 
   -- print by keys

@@ -33,13 +33,13 @@ This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), 
 ### Photo Enhancement: iPhone photo to DSLR photo
 <img src="https://junyanz.github.io/CycleGAN/images/photo_enhancement.jpg" width="1000px"/>
 
-## Setup
 
-### Prerequisites
+
+## Prerequisites
 - Linux or OSX
 - NVIDIA GPU + CUDA CuDNN (CPU mode and CUDA without CuDNN may work with minimal modification, but untested)
 
-### Getting Started
+## Getting Started
 - Install torch and dependencies from https://github.com/torch/distro
 - Install torch packages `nngraph`, `class`, `display`
 ```bash
@@ -52,11 +52,29 @@ luarocks install https://raw.githubusercontent.com/szym/display/master/display-s
 git clone https://github.com/junyanz/CycleGAN
 cd CycleGAN
 ```
-- Download the dataset (e.g. zebra and horse images from ImageNet):
+
+### Apply Pre-trained Models
+- Download the test photos (taken by [Alexei Efros](https://www.flickr.com/photos/aaefros)):
+```
+bash ./datasets/download_dataset.sh ae_photos
+```
+- Download the pre-trained model `style_cezanne`:
+```
+bash ./pretrain_models/download_model.sh style_cezanne
+```
+- Now, let's generate Paul Cézanne style images:
+```
+DATA_ROOT=./datasets/ae_photos name=style_cezanne_pretrained model=one_direction_test phase=test th test.lua
+```
+The test results will be saved to `./results/style_cezanne_pretrained/latest_test/index.html`.  
+Please refer to [Model Zoo](#Pre-trained-models) for more pre-trained models.
+
+### Train
+- Download a dataset (e.g. zebra and horse images from ImageNet):
 ```bash
 bash ./datasets/download_dataset.sh horse2zebra
 ```
-- Train the model
+- Train a model:
 ```bash
 DATA_ROOT=./datasets/horse2zebra name=horse2zebra_model th train.lua
 ```
@@ -69,32 +87,47 @@ DATA_ROOT=./datasets/horse2zebra name=horse2zebra_model gpu=0 cudnn=0 th train.l
 th -ldisplay.start 8000 0.0.0.0
 ```
 
+### Test
 - Finally, test the model:
 ```bash
 DATA_ROOT=./datasets/horse2zebra name=horse2zebra_model phase=test th test.lua
 ```
 The test results will be saved to a html file here: `./results/horse2zebra_model/latest_test/index.html`.
 
-## Train
+
+## Model Zoo
+Download the pre-trained models with the following script. The model will be saved to `./checkpoints/model_name/latest_net_G.t7`.
+```bash
+bash ./models/download_model.sh model_name
+```
+- `orange2apple` (orange -> apple) and `apple2orange`: trained on ImageNet categories `apple` and `orange`.
+- `horse2zebra` (horse -> zebra) and `zebra2horse` (zebra -> horse): trained on ImageNet categories `horse` and `zebra`.
+- `style_monet` (landscape photo -> Monet painting style),  `style_vangogh` (landscape photo  -> Van Gogh painting style), `style_ukiyoe` (landscape photo  -> Ukiyo-e painting style), `style_cezanne` (landscape photo  -> Cezanne painting style): trained on paintings and Flickr landscape photos.
+- `monet2photo` (Monet paintings -> real landscape): trained on paintings and Flickr landscape photographs.
+- `cityscapes_photo2label` (street scene -> label) and `cityscapes_label2photo` (label -> street scene): trained on the Cityscapes dataset.
+- `map2sat` (map -> aerial photo) and `sat2map` (aerial photo -> map): trained on Google maps.
+- `iphone2dslr_flower` (iPhone photos of flower -> DSLR photos of flower): trained on Flickr photos.
+
+
+
+## Training and Test Details
+- To train a model,  
 ```bash
 DATA_ROOT=/path/to/data/ name=expt_name th train.lua
 ```
-
-Models are saved to `./checkpoints/expt_name` (can be changed by passing `checkpoint_dir=your_dir` in train.lua).
-
+- Models are saved to `./checkpoints/expt_name` (can be changed by passing `checkpoint_dir=your_dir` in train.lua).  
 See `opt_train` in `options.lua` for additional training options.
 
-## Test
+- To test the model,
 ```bash
 DATA_ROOT=/path/to/data/ name=expt_name which_direction='AtoB' phase=test th test.lua
 ```
-
 This will run the model named `expt_name` in both directions on all images in `/path/to/data/testA` and `/path/to/data/testB`.
 If `which_direction` is 'BtoA', the two sets A and B of the datasets are flipped.
+- Result images, and a webpage to view them, are saved to `./results/expt_name` (can be changed by passing `results_dir=your_dir` in test.lua).
+- See `opt_test` in `options.lua` for additional test options. Please use `model=one_direction_test` if you only would like to generate outputs of the trained network in only one direction.
 
-Result images, and a webpage to view them, are saved to `./results/expt_name` (can be changed by passing `results_dir=your_dir` in test.lua).
 
-See `opt_test` in `options.lua` for additional testing options.
 
 
 ## Datasets
@@ -110,32 +143,6 @@ bash ./datasets/download_dataset.sh dataset_name
 - `summer2winter_yosemite`: 1273 summer Yosemite images and 854 winter Yosemite images were downloaded using Flickr API. See more details in our paper.
 - `monet2photo`, `vangogh2photo`, `ukiyoe2photo`, `cezanne2photo`: The art images were downloaded from [Wikiart](https://www.wikiart.org/). The real photos are downloaded from Flickr using combination of tags *landscape* and *landscapephotography*. The training set size of each class is Monet:1074, Cezanne:584, Van Gogh:401, Ukiyo-e:1433, Photographs:6853.
 - `iphone2dslr_flower`: both classe of images were downlaoded from Flickr. The training set size of each class is iPhone:1813, DSLR:3316. See more details in our paper.
-
-## Pre-trained Models
-Download the pre-trained models with the following script. You need to rename the model (e.g. `orange2apple` to `/checkpoints/orange2apple/latest_net_G.t7`) after the download has finished.
-```bash
-bash ./models/download_model.sh model_name
-```
-- `orange2apple` (orange -> apple) and `apple2orange`: trained on ImageNet categories `apple` and `orange`.
-- `horse2zebra` (horse -> zebra) and `zebra2horse` (zebra -> horse): trained on ImageNet categories `horse` and `zebra`.
-- `style_monet` (landscape photo -> Monet painting style),  `style_vangogh` (landscape photo  -> Van Gogh painting style), `style_ukiyoe` (landscape photo  -> Ukiyo-e painting style), `style_cezanne` (landscape photo  -> Cezanne painting style): trained on paintings and Flickr landscape photos.
-- `monet2photo` (Monet paintings -> real landscape): trained on paintings and Flickr landscape photographs.
-- `cityscapes_photo2label` (street scene -> label) and `cityscapes_label2photo` (label -> street scene): trained on the Cityscapes dataset.
-- `map2sat` (map -> aerial photo) and `sat2map` (aerial photo -> map): trained on Google maps.
-- `iphone2dslr_flower` (iPhone photos of flower -> DSLR photos of flower): trained on Flickr photos.
-
-For example, to generate Ukiyo-e style images using the pre-trained model,
-
-```
-bash ./datasets/download_dataset.sh ukiyoe2photo
-bash ./models/download_model.sh style_ukiyoe
-mkdir ./checkpoints/ukiyoe2photo_pretrained
-mv ./models/style_ukiyoe.t7 ./checkpoints/ukiyoe2photo_pretrained/latest_net_G.t7
-DATA_ROOT=./datasets/ukiyoe2photo name=ukiyoe2photo_pretrained which_direction='BtoA' model=one_direction_test phase=test th test.lua
-```
-
-Please pay attention to the direction. `which_direction='BtoA'` was used because the pretrained network transforms photos to Ukiyo-e-style images, but the dataset `ukiyoe2photo` is from Ukiyo-e paintings to photos. `model=one_direction_test` loads the code that generates outputs of the trained network in only one direction.
-
 
 
 ## Display UI
