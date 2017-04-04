@@ -90,7 +90,7 @@ s2 = opt.fineSize / opt.aspect_ratio
 
 visuals = {}
 
-for n = 1, math.floor(opt.how_many/opt.batchSize) do
+for n = 1, math.floor(opt.how_many) do
   print('processing batch ' .. n)
   local cur_dataA, cur_dataB, cur_pathsA, cur_pathsB = data_loader:GetNextBatch()
 
@@ -130,7 +130,7 @@ for i = 1, #labels do
 end
 io.write('</tr>')
 
-for n = 1,math.floor(opt.how_many/opt.batchSize) do
+for n = 1,math.floor(opt.how_many) do
   io.write('<tr>')
   io.write('<td>' .. tostring(n) .. '</td>')
   for j = 1, #labels do

@@ -20,14 +20,6 @@ function OneDirectionTestModel:Initialize(opt)
   self.real_A = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
 
   -- load/define models
-  local use_lsgan = ((opt.use_lsgan ~= nil) and (opt.use_lsgan == 1))
-  if not use_lsgan then
-    self.criterionGAN = nn.BCECriterion()
-  else
-    self.criterionGAN = nn.MSECriterion()
-  end
-  self.criterionRec = nn.AbsCriterion()
-
   self.netG_A = util.load_test_model('G', opt)
 
   self:RefreshParameters()

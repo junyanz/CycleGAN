@@ -54,7 +54,6 @@ local opt_train = {
 -- options for test
 opt_test = {
   DATA_ROOT = '',           -- path to images (should have subfolders 'train', 'val', etc)
-  batchSize = 1,            -- # images in batch
   loadSize = 256,           -- scale images to this size
   fineSize = 256,           --  then crop to this size
   flip = 0,                  -- horizontal mirroring data augmentation
