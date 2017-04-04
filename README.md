@@ -3,6 +3,8 @@
 ### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
 
 
+<img src='imgs/horse2zebra.gif' width=384>
+
 Torch implementation for learning an image-to-image translation (i.e. [pix2pix](https://github.com/phillipi/pix2pix)) **without** input-output pairs, for example:
 
 
