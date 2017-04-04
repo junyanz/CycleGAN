@@ -69,6 +69,7 @@ DATA_ROOT=./datasets/ae_photos name=style_cezanne_pretrained model=one_direction
 ```
 The test results will be saved to `./results/style_cezanne_pretrained/latest_test/index.html`.  
 Please refer to [Model Zoo](#Pre-trained-models) for more pre-trained models.
+`./examples/test_vangogh_style_on_ae_photos.sh` is an example script that downloads the pretrained Van Gogh style network and runs it on Alexei's photos. 
 
 ### Train
 - Download a dataset (e.g. zebra and horse images from ImageNet):
