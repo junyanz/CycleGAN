@@ -1,4 +1,5 @@
-
+<img src='imgs/horse2zebra.gif' align="right" width=256>
+<br><br><br>
 
 # CycleGAN
 ### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
@@ -65,7 +66,7 @@ bash ./pretrained_models/download_model.sh style_cezanne
 ```
 - Now, let's generate Paul Cézanne style images:
 ```
-DATA_ROOT=./datasets/ae_photos name=style_cezanne_pretrained model=one_direction_test phase=test loadSize=256 fineSize=256 resize_or_crop=``scale_width`` th test.lua
+DATA_ROOT=./datasets/ae_photos name=style_cezanne_pretrained model=one_direction_test phase=test loadSize=256 fineSize=256 resize_or_crop="scale_width" th test.lua
 ```
 The test results will be saved to `./results/style_cezanne_pretrained/latest_test/index.html`.  
 Please refer to [Model Zoo](#Pre-trained-models) for more pre-trained models.
