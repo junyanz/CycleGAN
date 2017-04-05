@@ -120,7 +120,7 @@ local function loadSingleImage(path)
       end
       if iW~=oW then
         w1 = math.ceil(torch.uniform(1e-2, iW-oW))
-      end    
+      end
       if iH ~= oH or iW ~= oW then
         im = image.crop(im, w1, h1, w1 + oW, h1 + oH)
       end
@@ -136,11 +136,15 @@ local function loadSingleImage(path)
       w = math.floor(w/4)*4
       local x = math.floor(torch.uniform(0, iW - w))
       local y = math.floor(torch.uniform(0, iH - w))
-      im = image.crop(im, x, y, x+w, y+w)          
-    elseif (opt.resize_or_crop =='scale_width') then
+      im = image.crop(im, x, y, x+w, y+w)
+    elseif (opt.resize_or_crop == 'scale_width') then
       w = oW
       h = torch.floor(iH * oW/iW)
       im = image.scale(im, w, h)
+    elseif (opt.resize_or_crop == 'scale_height') then
+      h = oH
+      w = torch.floor(iW * oH / iH)
+      im = image.scale(im, 448, h)
     end
 
     if opt.flip == 1 and torch.uniform() > 0.5 then

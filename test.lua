@@ -103,7 +103,7 @@ for n = 1, math.floor(opt.how_many) do
   visuals = model:GetCurrentVisuals(opt, opt.fineSize)
 
   for i,visual in ipairs(visuals) do
-    if opt.resize_or_crop == 'scale_width' then
+    if opt.resize_or_crop == 'scale_width' or opt.resize_or_crop == 'scale_height' then
       s1 = nil
       s2 = nil
     end

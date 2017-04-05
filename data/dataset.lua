@@ -342,8 +342,8 @@ end
 -- converts a table of samples (and corresponding labels) to a clean tensor
 local function tableToOutput(self, dataTable, scalarTable)
    local data, scalarLabels, labels
-  if opt.resize_or_crop == 'crop' or opt.resize_or_crop == 'scale_width' then
-    assert(#scalarTable == 1)    
+  if opt.resize_or_crop == 'crop' or opt.resize_or_crop == 'scale_width' or opt.resize_or_crop == 'scale_height' then
+    assert(#scalarTable == 1)
     data = torch.Tensor(1,
                 dataTable[1]:size(1), dataTable[1]:size(2), dataTable[1]:size(3))
     data[1]:copy(dataTable[1])
