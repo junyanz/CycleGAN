@@ -63,7 +63,7 @@ bash ./datasets/download_dataset.sh ae_photos
 ```
 - Download the pre-trained model `style_cezanne`:
 ```
-bash ./pretrain_models/download_model.sh style_cezanne
+bash ./pretrained_models/download_model.sh style_cezanne
 ```
 - Now, let's generate Paul Cézanne style images:
 ```
