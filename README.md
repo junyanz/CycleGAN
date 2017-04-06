@@ -102,7 +102,7 @@ The test results will be saved to a html file here: `./results/horse2zebra_model
 ## Model Zoo
 Download the pre-trained models with the following script. The model will be saved to `./checkpoints/model_name/latest_net_G.t7`.
 ```bash
-bash ./models/download_model.sh model_name
+bash ./pretrained_models/download_model.sh model_name
 ```
 - `orange2apple` (orange -> apple) and `apple2orange`: trained on ImageNet categories `apple` and `orange`.
 - `horse2zebra` (horse -> zebra) and `zebra2horse` (zebra -> horse): trained on ImageNet categories `horse` and `zebra`.
