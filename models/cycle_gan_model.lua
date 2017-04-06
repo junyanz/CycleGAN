@@ -294,21 +294,17 @@ local function MakeIm3(im)
 end
 
 function CycleGANModel:GetCurrentVisuals(opt, size)
-  if not size then
-    size = opt.display_winsize
-  end
-
   local visuals = {}
   table.insert(visuals, {img=MakeIm3(self.real_A), label='real_A'})
   table.insert(visuals, {img=MakeIm3(self.fake_B), label='fake_B'})
   table.insert(visuals, {img=MakeIm3(self.rec_A), label='rec_A'})
-  if opt.identity > 0 then
+  if opt.test == 0 and opt.identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_A), label='identity_A'})
   end
   table.insert(visuals, {img=MakeIm3(self.real_B), label='real_B'})
   table.insert(visuals, {img=MakeIm3(self.fake_A), label='fake_A'})
   table.insert(visuals, {img=MakeIm3(self.rec_B), label='rec_B'})
-  if opt.identity > 0 then
+  if opt.test == 0 and opt.identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_B), label='identity_B'})
   end
   return visuals
