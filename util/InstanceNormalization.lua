@@ -1,7 +1,13 @@
 require 'nn'
 
-_ = [[
-   An implementation for https://arxiv.org/abs/1607.08022
+--[[
+  Implements instance normalization as described in the paper
+
+  Instance Normalization: The Missing Ingredient for Fast Stylization
+  Dmitry Ulyanov, Andrea Vedaldi, Victor Lempitsky
+  https://arxiv.org/abs/1607.08022
+  This implementation is based on
+  https://github.com/DmitryUlyanov/texture_nets
 ]]
 
 local InstanceNormalization, parent = torch.class('nn.InstanceNormalization', 'nn.Module')
@@ -19,16 +25,16 @@ function InstanceNormalization:__init(nOutput, eps, momentum, affine)
    else
       self.affine = true
    end
-   
+
    self.nOutput = nOutput
    self.prev_batch_size = -1
 
-   if self.affine then 
+   if self.affine then
       self.weight = torch.Tensor(nOutput):uniform()
       self.bias = torch.Tensor(nOutput):zero()
       self.gradWeight = torch.Tensor(nOutput)
       self.gradBias = torch.Tensor(nOutput)
-   end 
+   end
 end
 
 function InstanceNormalization:updateOutput(input)
@@ -36,7 +42,7 @@ function InstanceNormalization:updateOutput(input)
    assert(input:size(2) == self.nOutput)
 
    local batch_size = input:size(1)
-   
+
    if batch_size ~= self.prev_batch_size or (self.bn and self:type() ~= self.bn:type())  then
       self.bn = nn.SpatialBatchNormalization(input:size(1)*input:size(2), self.eps, self.momentum, self.affine)
       self.bn:type(self:type())
@@ -58,7 +64,7 @@ function InstanceNormalization:updateOutput(input)
 
    local input_1obj = input:contiguous():view(1,input:size(1)*input:size(2),input:size(3),input:size(4))
    self.output = self.bn:forward(input_1obj):viewAs(input)
-   
+
    return self.output
 end
 
@@ -67,9 +73,9 @@ function InstanceNormalization:updateGradInput(input, gradOutput)
 
    assert(self.bn)
 
-   local input_1obj = input:contiguous():view(1,input:size(1)*input:size(2),input:size(3),input:size(4)) 
-   local gradOutput_1obj = gradOutput:contiguous():view(1,input:size(1)*input:size(2),input:size(3),input:size(4)) 
-   
+   local input_1obj = input:contiguous():view(1,input:size(1)*input:size(2),input:size(3),input:size(4))
+   local gradOutput_1obj = gradOutput:contiguous():view(1,input:size(1)*input:size(2),input:size(3),input:size(4))
+
    if self.affine then
       self.bn.gradWeight:zero()
       self.bn.gradBias:zero()
@@ -87,7 +93,7 @@ end
 function InstanceNormalization:clearState()
    self.output = self.output.new()
    self.gradInput = self.gradInput.new()
-   
+
    if self.bn then
      self.bn:clearState()
    end
