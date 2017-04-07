@@ -17,7 +17,8 @@ Torch implementation for learning an image-to-image translation (i.e. [pix2pix](
  In arxiv, 2017. (* equal contributions)  
 
 This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), as well as other methods like [BiGAN](https://arxiv.org/abs/1605.09782)/[ALI](https://ishmaelbelghazi.github.io/ALI/) and Apple's paper [S+U learning](https://arxiv.org/pdf/1612.07828.pdf).  
-**PyTorch** version is coming soon (by April 7th).
+The code was written by [Jun-Yan Zhu](github.com/junyanz) and [Taesung Park](https://github.com/taesung89).  
+The **PyTorch** version is coming soon.  
 
 ## Applications
 ### Monet Paintings to Photos
