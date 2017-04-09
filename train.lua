@@ -14,10 +14,7 @@ options = require 'options'
 opt = options.parse_options('train')
 
 -- setup visualization
-if opt.display_id > 0 then
-  disp = require 'display'
-  visualizer = require 'util/visualizer'
-end
+visualizer = require 'util/visualizer'
 
 -- initialize torch GPU/CPU mode
 if opt.gpu > 0 then

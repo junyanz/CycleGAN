@@ -5,10 +5,15 @@
 local visualizer = {}
 
 require 'torch'
-disp = require 'display'
+disp = nil
+
+if opt.display_id > 0 then -- [hack]: assume that opt already existed
+  disp = require 'display'
+end
 util = require 'util/util'
 require 'image'
 
+-- function visualizer
 function visualizer.disp_image(img_data, win_size, display_id, title)
   local tensortype = torch.getdefaulttensortype()
   disp.image(util.deprocess_batch(util.scaleBatch(img_data:float(),win_size,win_size)), {win=display_id, title=title})
