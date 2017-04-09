@@ -41,6 +41,7 @@ The **PyTorch** version is coming soon.
 ## Prerequisites
 - Linux or OSX
 - NVIDIA GPU + CUDA CuDNN (CPU mode and CUDA without CuDNN may work with minimal modification, but untested)
+- For MAC users, you need the Linux/GNU commands `gfind` and `gwc`, which can be installed with `brew install findutils coreutils`.
 
 ## Getting Started
 ### Installation
