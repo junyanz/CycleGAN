@@ -141,8 +141,8 @@ function Pix2PixModel:fGx_basic(x, netG, netD, real, fake, gradParametersG, opt)
   real_B = real[self.B_idx]
   real_A = real[self.A_idx]
   fake_B = fake[self.B_idx]
-  local errL1 = self.criterionL1:forward(fake_B, real_B) * opt.lambda
-  local dl1_loss_do = self.criterionL1:backward(fake_B, real_B) * opt.lambda
+  local errL1 = self.criterionL1:forward(fake_B, real_B) * opt.lambda_A
+  local dl1_loss_do = self.criterionL1:backward(fake_B, real_B) * opt.lambda_A
   netG:backward(real_A, dgan_loss_do[self.B_idx] + dl1_loss_do)
 
   return gradParametersG, errG, errL1
