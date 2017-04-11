@@ -33,9 +33,8 @@ function Pix2PixModel:Initialize(opt)  -- use lsgan
 
   local netG, netD = nil, nil
   if opt.continue_train == 1 then
-    if opt.which_epoch then -- which_epoch option exists in test mode
+    if opt.test == 1 then -- only load model G for test
       netG = util.load_test_model('G', opt)
-      netD = util.load_test_model('D', opt)
     else
       netG = util.load_model('G', opt)
       netD = util.load_model('D', opt)
@@ -49,23 +48,24 @@ function Pix2PixModel:Initialize(opt)  -- use lsgan
   self.netG = netG
 
   -- define real/fake labels
-  netD_output_size = self.netD:forward(self.real_AB):size()
-  self.fake_label = torch.Tensor(netD_output_size):fill(0.0)
-  self.real_label = torch.Tensor(netD_output_size):fill(1.0) -- no soft smoothing
+  if opt.test == 0 then
+    netD_output_size = self.netD:forward(self.real_AB):size()
+    self.fake_label = torch.Tensor(netD_output_size):fill(0.0)
+    self.real_label = torch.Tensor(netD_output_size):fill(1.0) -- no soft smoothing
 
-  self.optimStateD = self:InitializeStates()
-  self.optimStateG = self:InitializeStates()
+    self.optimStateD = self:InitializeStates()
+    self.optimStateG = self:InitializeStates()
 
-  self:RefreshParameters()
+    self:RefreshParameters()
+
+    print('---------- # Learnable Parameters --------------')
+    print(('G = %d'):format(self.parametersG:size(1)))
+    print(('D = %d'):format(self.parametersD:size(1)))
+    print('------------------------------------------------')
+  end
 
   self.A_idx = {{}, {1, opt.input_nc}, {}, {}}
   self.B_idx = {{}, {opt.input_nc+1, opt.input_nc+opt.output_nc}, {}, {}}
-
-
-  print('---------- # Learnable Parameters --------------')
-  print(('G = %d'):format(self.parametersG:size(1)))
-  print(('D = %d'):format(self.parametersD:size(1)))
-  print('------------------------------------------------')
 end
 
 -- Runs the forward pass of the network
@@ -75,14 +75,26 @@ function Pix2PixModel:Forward(input, opt)
   	input.real_A = input.real_B
   	input.real_B = temp
   end
-  self.real_AB[self.A_idx]:copy(input.real_A)
-  self.real_AB[self.B_idx]:copy(input.real_B)
-  self.real_A = self.real_AB[self.A_idx]
-  self.real_B = self.real_AB[self.B_idx]
 
-  self.fake_AB[self.A_idx]:copy(self.real_A)
-  self.fake_B = self.netG:forward(self.real_A):clone()
-  self.fake_AB[self.B_idx]:copy(self.fake_B)
+  if opt.test == 0 then
+    self.real_AB[self.A_idx]:copy(input.real_A)
+    self.real_AB[self.B_idx]:copy(input.real_B)
+    self.real_A = self.real_AB[self.A_idx]
+    self.real_B = self.real_AB[self.B_idx]
+
+    self.fake_AB[self.A_idx]:copy(self.real_A)
+    self.fake_B = self.netG:forward(self.real_A):clone()
+    self.fake_AB[self.B_idx]:copy(self.fake_B)
+  else
+    if opt.gpu > 0 then
+      self.real_A = input.real_A:cuda()
+      self.real_B = input.real_B:cuda()
+    else
+      self.real_A = input.real_A:clone()
+      self.real_B = input.real_B:clone()
+    end
+    self.fake_B = self.netG:forward(self.real_A):clone()
+  end
 end
 
 -- create closure to evaluate f(X) and df/dX of discriminator

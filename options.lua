@@ -52,7 +52,7 @@ local opt_train = {
 }
 
 -- options for test
-opt_test = {
+local opt_test = {
   DATA_ROOT = '',           -- path to images (should have subfolders 'train', 'val', etc)
   loadSize = 128,           -- scale images to this size
   fineSize = 128,           --  then crop to this size
