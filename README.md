@@ -171,7 +171,7 @@ You should **not** expect our method to work on any combination of two random da
 
 
 ## Failure cases
-<img align="left" style="padding:10px" src="https://junyanz.github.io/CycleGAN/images/failure_putin.jpg" width=300>
+<img align="left" style="padding:10px" src="https://junyanz.github.io/CycleGAN/images/failure_putin.jpg" width=320>
 
 Our model does not work well when a test image looks unusual compared to training images, as shown in the left figure.  See more typical failure cases [here](https://junyanz.github.io/CycleGAN/images/failures.jpg). On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds. We have also explored tasks that require geometric changes, with little success. For example, on the task of `dog<->cat` transfiguration, the learned translation degenerates to making minimal changes to the input. We also observe a lingering gap between the results achievable with paired training data and those achieved by our unpaired method. In some cases, this gap may be very hard -- or even impossible,-- to close: for example, our method sometimes permutes the labels for tree and building in the output of the cityscapes photos->labels task.
 

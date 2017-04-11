@@ -49,29 +49,6 @@ function content.defineAlexNet(content_layer)
 end
 
 
-function content.defineHED()
-  local hed = nn.Sequential()
-  require 'loadcaffe'
-  -- require 'caffegraph'
-  require 'util/VGG_preprocess'
-  cnn = loadcaffe.load('../models/hed.prototxt', '../models/hed.caffemodel', 'cudnn')
-  hed:add(nn.SpatialUpSamplingBilinear({oheight=500, owidth=500}))
-  hed:add(nn.VGG_postprocess())
-  hed:add(cnn)
-  return hed
-end
-
-
-function content.defineVGGClf()
-  local clf = nn.Sequential()
-  require 'loadcaffe'
-  require 'util/VGG_preprocess'
-  cnn = loadcaffe.load('../models/vgg.prototxt', '../models/vgg.caffemodel', 'cudnn')
-  clf:add(nn.SpatialUpSamplingBilinear({oheight=224, owidth=224}))
-  clf:add(nn.VGG_postprocess())
-  clf:add(cnn)
-  return clf
-end
 
 function content.defineContent(content_loss, layer_name)
   -- print('content_loss_define', content_loss)

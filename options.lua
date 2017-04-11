@@ -39,8 +39,8 @@ local opt_train = {
    which_model_netG = 'resnet_6blocks',   -- selects model to use for netG
    norm = 'instance',             -- batch or instance normalization
    n_layers_D = 3,                -- only used if which_model_netD=='n_layers'
-   content_loss = 'pixel',        -- content loss type: L1, conv-layer, edge
-   layer_name = 'pixel',          -- layer used in content loss
+   content_loss = 'pixel',        -- content loss type: pixel, vgg
+   layer_name = 'pixel',          -- layer used in content loss (e.g. relu4_2)
    lambda_A = 10.0,               -- weight for cycle loss (A -> B -> A)
    lambda_B = 10.0,               -- weight for cycle loss (B -> A -> B)
    model = 'cycle_gan',           -- which mode to run. 'cycle_gan', 'pix2pix', 'bigan', 'content_gan'
