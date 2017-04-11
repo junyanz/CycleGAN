@@ -40,7 +40,6 @@ local loadSize   = {input_nc, opt.loadSize}
 local sampleSize = {input_nc, opt.fineSize}
 
 local function loadImage(path)
-
   local input = image.load(path, 3, 'float')
   local h = input:size(2)
   local w = input:size(3)
@@ -49,17 +48,13 @@ local function loadImage(path)
   imA = image.scale(imA, loadSize[2], loadSize[2])
   local imB = image.crop(input, w/2, 0, w, h)
   imB = image.scale(imB, loadSize[2], loadSize[2])
-  -- print('imA:size', imA:size())
-  -- print('imB:size', imB:size())
 
-  -- imA = image.scale(imA, loadSize[2], loadSize[2])
-  -- imB = image.scale(imB, loadSize[2], loadSize[2])
   local perm = torch.LongTensor{3, 2, 1}
-  imA = imA:index(1, perm)--:mul(256.0): brg, rgb
+  imA = imA:index(1, perm)
   imA = imA:mul(2):add(-1)
   imB = imB:index(1, perm)
   imB = imB:mul(2):add(-1)
---   print(img:size())
+
   assert(imA:max()<=1,"A: badly scaled inputs")
   assert(imA:min()>=-1,"A: badly scaled inputs")
   assert(imB:max()<=1,"B: badly scaled inputs")
@@ -95,7 +90,6 @@ end
 
 
 local function loadSingleImage(path)
-    -- print('image channel', input_nc)
     local im = image.load(path, input_nc, 'float')
     if opt.resize_or_crop == 'resize_and_crop' then
       im = image.scale(im, loadSize[2], loadSize[2])
@@ -105,7 +99,6 @@ local function loadSingleImage(path)
       im = im:index(1, perm)--:mul(256.0): brg, rgb
       im = im:mul(2):add(-1)
     end
-    -- print('im_size', im:size())
     assert(im:max()<=1,"A: badly scaled inputs")
     assert(im:min()>=-1,"A: badly scaled inputs")
 
@@ -178,21 +171,6 @@ local trainHook_doubleimage = function(self, path)
   return im
 end
 
---------------------------------------
--- trainLoader
---print('trainCache', trainCache)
---if paths.filep(trainCache) then
---   print('Loading train metadata from cache')
---   trainLoader = torch.load(trainCache)
---   trainLoader.sampleHookTrain = trainHook
---   trainLoader.loadSize = {input_nc, opt.loadSize, opt.loadSize}
---   trainLoader.sampleSize = {input_nc+output_nc, sampleSize[2], sampleSize[2]}
---   trainLoader.serial_batches = opt.serial_batches
---   trainLoader.split = 100
---else
---print('Creating train metadata')
---   print(opt.data)
---print('serial batch:, ', opt.serial_batches)
 
 if opt.align_data > 0 then
   sample_nc = input_nc*2
@@ -210,11 +188,8 @@ trainLoader = dataLoader{
     serial_batches = opt.serial_batches,
     verbose = true
  }
---   print('finish')
---torch.save(trainCache, trainLoader)
---print('saved metadata cache at', trainCache)
+
 trainLoader.sampleHookTrain = trainHook
---end
 collectgarbage()
 
 -- do some sanity checks on trainLoader

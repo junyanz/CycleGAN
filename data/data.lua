@@ -1,7 +1,7 @@
 --[[
     This data loader is a modified version of the one from dcgan.torch
     (see https://github.com/soumith/dcgan.torch/blob/master/data/data.lua).
-    
+
     Copyright (c) 2016, Deepak Pathak [See LICENSE file for details]
 ]]--
 
@@ -38,7 +38,7 @@ function data.new(n, opt_)
                                 print(opt)
                                 paths.dofile(donkey_file)
                              end
-    
+
       )
    else
       if donkey_file then paths.dofile(donkey_file) end
@@ -48,7 +48,7 @@ function data.new(n, opt_)
       function self.threads:dojob() end
       function self.threads:synchronize() end
    end
-  
+
    local nSamples = 0
    self.threads:addjob(function() return trainLoader:size() end,
          function(c) nSamples = c end)
@@ -80,25 +80,12 @@ end
 
 function data:getBatch()
    -- queue another job
---   print(self.threads)
    self.threads:addjob(self._getFromThreads, self._pushResult)
    self.threads:dojob()
    local res = result[1]
---   print(res)
---   print('result')
---   print(res)
---   os.exit()
---   paths = results[3]
---   print(paths)
-   
+
    img_data = res[1]
    img_paths =  res[3]
---   print(img_data:size())
---   print(type(img_data))
---   print(img_paths)
---   print(type(img_paths))
---   result[3] = nil
---   print(type(res))
 
    result[1] = nil
    if torch.type(img_data) == 'table' then

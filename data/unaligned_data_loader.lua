@@ -22,7 +22,6 @@ end
 function UnalignedDataLoader:Initialize(opt)
   opt.align_data = 0
   self.dataA = data_util.load_dataset('A', opt, opt.input_nc)
-  -- print(opt.output_nc)
   self.dataB = data_util.load_dataset('B', opt, opt.output_nc)
 end
 

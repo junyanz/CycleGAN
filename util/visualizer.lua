@@ -6,7 +6,7 @@ local visualizer = {}
 
 require 'torch'
 disp = nil
-
+print(opt)
 if opt.display_id > 0 then -- [hack]: assume that opt already existed
   disp = require 'display'
 end

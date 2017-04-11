@@ -331,10 +331,7 @@ function dataset:getByClass(class)
    else
     index = math.ceil(torch.uniform() * self.classListSample[class]:nElement())
    end
-  -- print('serial_batches: ', self.serial_batches)
-  -- print('max_index:, ', self.classListSample[class]:nElement())
-  -- print('index: ', index)
---   print('image_count',
+
    local imgpath = ffi.string(torch.data(self.imagePath[self.classListSample[class][index]]))
    return self:sampleHookTrain(imgpath),  imgpath
 end
@@ -369,18 +366,12 @@ function dataset:sample(quantity)
    local samplePaths = {}
    for i=1,quantity do
       local class = torch.random(1, #self.classes)
---      print(class)
       local out, imgpath = self:getByClass(class)
       table.insert(dataTable, out)
       table.insert(scalarTable, class)
       samplePaths[i] = imgpath
---      print(imgpath)
---      table.insert(pathTable, imgpath)
---      table.insert()
---      print('out', out:size())
    end
---   print('table')
---   print(table)
+
    local data, scalarLabels = tableToOutput(self, dataTable, scalarTable)
    return data, scalarLabels, samplePaths-- filePaths
 end

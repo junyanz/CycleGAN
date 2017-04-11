@@ -25,12 +25,14 @@ function CycleGANModel:Initialize(opt)
     self.fakeBPool = ImagePool(opt.pool_size)
   end
   -- define tensors
-  self.real_A = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
-  self.real_B = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
-  self.fake_A = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
-  self.fake_B = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
-  self.rec_A  = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
-  self.rec_B  = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
+  if opt.test == 0 then  -- allocate tensors for training
+    self.real_A = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
+    self.real_B = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
+    self.fake_A = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
+    self.fake_B = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
+    self.rec_A  = torch.Tensor(opt.batchSize, opt.input_nc, opt.fineSize, opt.fineSize)
+    self.rec_B  = torch.Tensor(opt.batchSize, opt.output_nc, opt.fineSize, opt.fineSize)
+  end
   -- load/define models
   local use_lsgan = ((opt.use_lsgan ~= nil) and (opt.use_lsgan == 1))
   if not use_lsgan then
@@ -42,11 +44,9 @@ function CycleGANModel:Initialize(opt)
 
   local netG_A, netD_A, netG_B, netD_B = nil, nil, nil, nil
   if opt.continue_train == 1 then
-    if opt.which_epoch then -- which_epoch option exists in test mode
+    if opt.test == 1 then -- test mode
       netG_A = util.load_test_model('G_A', opt)
       netG_B = util.load_test_model('G_B', opt)
-      netD_A = util.load_test_model('D_A', opt)
-      netD_B = util.load_test_model('D_B', opt)
     else
       netG_A = util.load_model('G_A', opt)
       netG_B = util.load_model('G_B', opt)
@@ -67,34 +67,31 @@ function CycleGANModel:Initialize(opt)
     print('netD_B', netD_B)
   end
 
-
   self.netD_A = netD_A
   self.netG_A = netG_A
   self.netG_B = netG_B
   self.netD_B = netD_B
 
   -- define real/fake labels
-  local D_A_size = self.netD_A:forward(self.real_B):size()  -- hack: assume D_size_A = D_size_B
-  self.fake_label_A = torch.Tensor(D_A_size):fill(0.0)
-  self.real_label_A = torch.Tensor(D_A_size):fill(0.9) -- no soft smoothing
-  local D_B_size = self.netD_B:forward(self.real_A):size()  -- hack: assume D_size_A = D_size_B
-  self.fake_label_B = torch.Tensor(D_B_size):fill(0.0)
-  self.real_label_B = torch.Tensor(D_B_size):fill(0.9) -- no soft smoothing
-
-  self.optimStateD_A = self:InitializeStates()
-  self.optimStateG_A = self:InitializeStates()
-  self.optimStateD_B = self:InitializeStates()
-  self.optimStateG_B = self:InitializeStates()
-
-  self:RefreshParameters()
-
-  print('---------- # Learnable Parameters --------------')
-  print(('G_A = %d'):format(self.parametersG_A:size(1)))
-  print(('D_A = %d'):format(self.parametersD_A:size(1)))
-  print(('G_B = %d'):format(self.parametersG_B:size(1)))
-  print(('D_B = %d'):format(self.parametersD_B:size(1)))
-  print('------------------------------------------------')
-  -- os.exit()
+  if opt.test == 0 then
+    local D_A_size = self.netD_A:forward(self.real_B):size()  -- hack: assume D_size_A = D_size_B
+    self.fake_label_A = torch.Tensor(D_A_size):fill(0.0)
+    self.real_label_A = torch.Tensor(D_A_size):fill(0.9) -- no soft smoothing
+    local D_B_size = self.netD_B:forward(self.real_A):size()  -- hack: assume D_size_A = D_size_B
+    self.fake_label_B = torch.Tensor(D_B_size):fill(0.0)
+    self.real_label_B = torch.Tensor(D_B_size):fill(0.9) -- no soft smoothing
+    self.optimStateD_A = self:InitializeStates()
+    self.optimStateG_A = self:InitializeStates()
+    self.optimStateD_B = self:InitializeStates()
+    self.optimStateG_B = self:InitializeStates()
+    self:RefreshParameters()
+    print('---------- # Learnable Parameters --------------')
+    print(('G_A = %d'):format(self.parametersG_A:size(1)))
+    print(('D_A = %d'):format(self.parametersD_A:size(1)))
+    print(('G_B = %d'):format(self.parametersG_B:size(1)))
+    print(('D_B = %d'):format(self.parametersD_B:size(1)))
+    print('------------------------------------------------')
+  end
 end
 
 -- Runs the forward pass of the network and
@@ -106,11 +103,19 @@ function CycleGANModel:Forward(input, opt)
   	input.real_B = temp
   end
 
-  self.real_A:copy(input.real_A)
-  self.real_B:copy(input.real_B)
+  if opt.test == 0 then
+    self.real_A:copy(input.real_A)
+    self.real_B:copy(input.real_B)
+  end
 
   if opt.test == 1 then  -- forward for test
-    -- print('test time: generate images')
+    if opt.gpu > 0 then
+      self.real_A = input.real_A:cuda()
+      self.real_B = input.real_B:cuda()
+    else
+      self.real_A = input.real_A:clone()
+      self.real_B = input.real_B:clone()
+    end
     self.fake_B = self.netG_A:forward(self.real_A):clone()
     self.fake_A = self.netG_B:forward(self.real_B):clone()
     self.rec_A  = self.netG_B:forward(self.fake_B):clone()
@@ -217,9 +222,8 @@ function CycleGANModel:OptimizeParameters(opt)
   local fDA = function(x) return self:fDAx(x, opt) end
   local fGA = function(x) return self:fGAx(x, opt) end
   local fDB = function(x) return self:fDBx(x, opt) end
-  -- if opt.forward_cycle == 1 then
   local fGB = function(x) return self:fGBx(x, opt) end
-  -- end
+
   optim.adam(fGA, self.parametersG_A, self.optimStateG_A)
   optim.adam(fDA, self.parametersD_A, self.optimStateD_A)
   optim.adam(fGB, self.parametersG_B, self.optimStateG_B)

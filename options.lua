@@ -5,7 +5,23 @@
 local options = {}
 -- options for test
 local opt_train = {
+   DATA_ROOT = '',         -- path to images (should have subfolders 'train', 'val', etc)
+   batchSize = 1,          -- # images in batch
+   loadSize = 143,         -- scale images to this size
+   fineSize = 128,         --  then crop to this size
+   ngf = 64,               -- #  of gen filters in first conv layer
+   ndf = 64,               -- #  of discrim filters in first conv layer
+   input_nc = 3,           -- #  of input image channels
+   output_nc = 3,          -- #  of output image channels
+   niter = 100,            -- #  of iter at starting learning rate
+   niter_decay = 100,      --  # of iter to linearly decay learning rate to zero
+   lr = 0.0002,            -- initial learning rate for adam
+   beta1 = 0.5,            -- momentum term of adam
+   ntrain = math.huge,     -- #  of examples per epoch. math.huge for full dataset
    flip = 1,               -- if flip the images for data argumentation
+   display_id = 10,        -- display window id.
+   display_winsize = 128,  -- display window size
+   display_freq = 25,      -- display the current results every display_freq iterations
    gpu = 1,                -- gpu = 0 is CPU mode. gpu=X is GPU mode on GPU X
    name = '',              -- name of the experiment, should generally be passed on the command line
    which_direction = 'AtoB',    -- AtoB or BtoA
@@ -19,7 +35,9 @@ local opt_train = {
    serial_batches = 0,          -- if 1, takes images in order to make batches, otherwise takes them randomly
    checkpoints_dir = './checkpoints', -- models are saved here
    cudnn = 1,                         -- set to 0 to not use cudnn
-  norm = 'instance',             -- batch or instance normalization
+   which_model_netD = 'basic',        -- selects model to use for netD
+   which_model_netG = 'resnet_6blocks',   -- selects model to use for netG
+   norm = 'instance',             -- batch or instance normalization
    n_layers_D = 3,                -- only used if which_model_netD=='n_layers'
    content_loss = 'pixel',        -- content loss type: L1, conv-layer, edge
    layer_name = 'pixel',          -- layer used in content loss
@@ -29,7 +47,7 @@ local opt_train = {
    use_lsgan = 1,                 -- if 1, use least square GAN, if 0, use vanilla GAN
    align_data = 0,                -- if > 0, use the dataloader for where the images are aligned
    pool_size = 50,                -- the size of image buffer that stores previously generated images
-   resize_or_crop='resize_and_crop',  -- resizing/cropping strategy
+   resize_or_crop = 'resize_and_crop',  -- resizing/cropping strategy
    identity = 0,                  -- use identity mapping. Setting opt.identity other than 1 has an effect of scaling the weight of the identity mapping loss. For example, if the weight of the identity loss should be 10 times smaller than the weight of the reconstruction loss, please set opt.identity = 0.1
 }
 

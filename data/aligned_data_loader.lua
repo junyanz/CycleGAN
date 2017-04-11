@@ -32,7 +32,6 @@ end
 -- the batch for dataset A and dataset B
 function AlignedDataLoader:LoadBatchForAllDatasets()
   local batch_data, path = self.data:getBatch()
-  -- print('batch_size', batch_data:size())
   local batchA = batch_data[{ {}, self.idx_A, {}, {} }]
   local batchB = batch_data[{ {}, self.idx_B, {}, {} }]
 
