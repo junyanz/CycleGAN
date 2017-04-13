@@ -137,7 +137,7 @@ local function loadSingleImage(path)
     elseif (opt.resize_or_crop == 'scale_height') then
       h = oH
       w = torch.floor(iW * oH / iH)
-      im = image.scale(im, 448, h)
+      im = image.scale(im, w, h)
     end
 
     if opt.flip == 1 and torch.uniform() > 0.5 then
