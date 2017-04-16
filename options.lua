@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 
 local options = {}
--- options for test
+-- options for train
 local opt_train = {
    DATA_ROOT = '',         -- path to images (should have subfolders 'train', 'val', etc)
    batchSize = 1,          -- # images in batch
