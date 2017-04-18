@@ -223,11 +223,8 @@ local function build_res_block(dim, padding_type)
   local res_block = nn.Sequential()
   local concat = nn.ConcatTable()
   concat:add(conv_block)
-  if padding_type == 'none' or padding_type == 'reflect-start' then
-    concat:add(nn.ShaveImage(2))
-  else
-    concat:add(nn.Identity())
-  end
+  concat:add(nn.Identity())
+  
   res_block:add(concat):add(nn.CAddTable())
   return res_block
 end
