@@ -3,7 +3,7 @@
 <br><br><br>
 
 # CycleGAN
-### [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
+### [[PyTorch]](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix) [[project page]](https://junyanz.github.io/CycleGAN/)   [[paper]](https://arxiv.org/pdf/1703.10593.pdf)
 
 Torch implementation for learning an image-to-image translation (i.e. [pix2pix](https://github.com/phillipi/pix2pix)) **without** input-output pairs, for example:
 
@@ -18,7 +18,7 @@ Torch implementation for learning an image-to-image translation (i.e. [pix2pix](
 
 This package includes CycleGAN, [pix2pix](https://github.com/phillipi/pix2pix), as well as other methods like [BiGAN](https://arxiv.org/abs/1605.09782)/[ALI](https://ishmaelbelghazi.github.io/ALI/) and Apple's paper [S+U learning](https://arxiv.org/pdf/1612.07828.pdf).  
 The code was written by [Jun-Yan Zhu](https://github.com/junyanz) and [Taesung Park](https://github.com/taesung89).  
-The **PyTorch** version is coming soon.  
+See our ongoing [[PyTorch]](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix) implementation for CycleGAN and pix2pix.
 
 ## Applications
 ### Monet Paintings to Photos
