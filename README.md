@@ -33,7 +33,7 @@ The **PyTorch** version is coming soon.
 ### Season Transfer
 <img src="https://junyanz.github.io/CycleGAN/images/season.jpg" width="1000px"/>
 
-### Photo Enhancement: iPhone photo to DSLR photo
+### Photo Enhancement: Narrow depth of field
 <img src="https://junyanz.github.io/CycleGAN/images/photo_enhancement.jpg" width="1000px"/>
 
 
