@@ -36,10 +36,14 @@ end
 
 -- returns the size of each dataset
 function UnalignedDataLoader:size(dataset)
+  if dataset == 'A' then
+    return self.dataA:size()
+  end
+
   if dataset == 'B' then
     return self.dataB:size()
   end
 
-  -- return the size of the first dataset by default
-  return self.dataA:size()
+  return math.max(self.dataA:size(), self.dataB:size())
+  -- return the size of the largest dataset by default
 end
