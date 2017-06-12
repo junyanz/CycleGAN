@@ -136,12 +136,12 @@ See `opt_test` in `options.lua` for additional test options. Please use `model=o
 
 
 ## Datasets
-Download the datasets using the following script:
+Download the datasets using the following script. Some of the datasets are collected by other researchers. Please cite their papers if you use the data.
 ```bash
 bash ./datasets/download_dataset.sh dataset_name
 ```
-- `facades`: 400 images from the [CMP Facades dataset](http://cmp.felk.cvut.cz/~tylecr1/facade/).
-- `cityscapes`: 2975 images from the [Cityscapes training set](https://www.cityscapes-dataset.com/).
+- `facades`: 400 images from the [CMP Facades dataset](http://cmp.felk.cvut.cz/~tylecr1/facade/). [[Citation](datasets/bibtex/facades.tex)]
+- `cityscapes`: 2975 images from the [Cityscapes training set](https://www.cityscapes-dataset.com/). [[Citation](datasets/bibtex/cityscapes.tex)]
 - `maps`: 1096 training images scraped from Google Maps.
 - `horse2zebra`: 939 horse images and 1177 zebra images downloaded from [ImageNet](http://www.image-net.org/) using keywords `wild horse` and `zebra`
 - `apple2orange`: 996 apple images and 1020 orange images downloaded from [ImageNet](http://www.image-net.org/) using keywords `apple` and `navel orange`.
