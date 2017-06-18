@@ -25,7 +25,7 @@ function visualizer.save_results(img_data, output_path)
   local image_out = nil
   local win_size = opt.display_winsize
   images = torch.squeeze(util.deprocess_batch(util.scaleBatch(img_data:float(), win_size, win_size)))
-  
+
   if images:dim() == 3 then
     image_out = images
   else
@@ -45,7 +45,7 @@ end
 function visualizer.save_images(imgs, save_dir, impaths, s1, s2)
   local tensortype = torch.getdefaulttensortype()
   torch.setdefaulttensortype('torch.FloatTensor')
-  batchSize = imgs:size(0)
+  batchSize = imgs:size(1)
   imgs_f = util.deprocess_batch(imgs):float()
   paths.mkdir(save_dir)
   for i = 1, batchSize do -- imgs_f[i]:size(2), imgs_f[i]:size(3)/opt.aspect_ratio
