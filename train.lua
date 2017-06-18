@@ -93,7 +93,10 @@ end
 
 function save_current_results(epoch, counter)
   local visuals = model:GetCurrentVisuals(opt)
-  visualizer.save_results(visuals, opt, epoch, counter)
+  for i,visual in ipairs(visuals) do
+    output_path = paths.concat(opt.visual_dir, 'train_epoch' .. epoch .. '_iter' .. counter .. '_' .. visual.label .. '.jpg')
+    visualizer.save_results(visual.img, output_path)
+  end
 end
 
 function print_current_errors(epoch, counter_in_epoch)

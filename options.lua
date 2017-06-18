@@ -124,7 +124,8 @@ function options.parse_options(mode)
   -- save opt to checkpoints
   paths.mkdir(opt.checkpoints_dir)
   paths.mkdir(paths.concat(opt.checkpoints_dir, opt.name))
-
+  opt.visual_dir = paths.concat(opt.checkpoints_dir, opt.name, 'visuals')
+  paths.mkdir(opt.visual_dir)
   -- save opt to the disk
   fd = io.open(paths.concat(opt.checkpoints_dir, opt.name, 'opt_' .. mode .. '.txt'), 'w')
   for i,k in ipairs(keyset) do
