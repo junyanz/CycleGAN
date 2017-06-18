@@ -7,6 +7,8 @@ disp = require 'display'
 util = require 'util/util'
 require 'image'
 
+local unpack = unpack or table.unpack
+
 function PlotUtil:__init(conf)
   conf = conf or {}
 end
@@ -36,7 +38,7 @@ function PlotUtil:Display(plot_vals, loss)
       plot_vals[#plot_vals + 1] = loss[v]
     end
   end
-  
+
   table.insert(self.plot_data, plot_vals)
   disp.plot(self.plot_data, self.plot_config)
 end
