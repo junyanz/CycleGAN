@@ -63,7 +63,7 @@ cd CycleGAN
 ```
 bash ./datasets/download_dataset.sh ae_photos
 ```
-- Download the pre-trained model `style_cezanne`:
+- Download the pre-trained model `style_cezanne` (For CPU model, use `style_cezanne_cpu`):
 ```
 bash ./pretrained_models/download_model.sh style_cezanne
 ```
@@ -114,7 +114,11 @@ bash ./pretrained_models/download_model.sh model_name
 - `map2sat` (map -> aerial photo) and `sat2map` (aerial photo -> map): trained on Google maps.
 - `iphone2dslr_flower` (iPhone photos of flowers -> DSLR photos of flowers): trained on Flickr photos.
 
-
+CPU models can be downloaded using:
+```bash
+bash pretrained_models/download_model.sh <name>_cpu
+```
+, where `<name>` can be `horse2zebra`, `style_monet`, etc. You just need to append `_cpu` to the target model.
 
 ## Training and Test Details
 To train a model,  
