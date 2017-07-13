@@ -2,7 +2,6 @@ local class = require 'class'
 require 'models.base_model'
 require 'models.architectures'
 require 'util.image_pool'
-local optnet = require 'optnet'
 
 util = paths.dofile('../util/util.lua')
 OneDirectionTestModel = class('OneDirectionTestModel', 'BaseModel')
@@ -25,8 +24,11 @@ function OneDirectionTestModel:Initialize(opt)
   self.netG_A = util.load_test_model('G', opt)
 
   -- setup optnet to save a bit of memory
-  local sample_input = torch.randn(1, opt.input_nc, 2, 2)
-  optnet.optimizeMemory(self.netG_A, sample_input, {inplace=true, reuseBuffers=true})
+  if opt.use_optnet == 1 then
+    local optnet = require 'optnet'
+    local sample_input = torch.randn(1, opt.input_nc, 2, 2)
+    optnet.optimizeMemory(self.netG_A, sample_input, {inplace=true, reuseBuffers=true})
+  end
 
   self:RefreshParameters()
 

@@ -2,7 +2,6 @@ local class = require 'class'
 require 'models.base_model'
 require 'models.architectures'
 require 'util.image_pool'
-local optnet = require 'optnet'
 
 util = paths.dofile('../util/util.lua')
 CycleGANModel = class('CycleGANModel', 'BaseModel')
@@ -51,9 +50,12 @@ function CycleGANModel:Initialize(opt)
       netG_B = util.load_test_model('G_B', opt)
 
       --setup optnet to save a little bit of memory
-      local sample_input = torch.randn(1, opt.input_nc, 2, 2)
-      optnet.optimizeMemory(netG_A, sample_input, {inplace=true, reuseBuffers=true})
-      optnet.optimizeMemory(netG_B, sample_input, {inplace=true, reuseBuffers=true})
+      if opt.use_optnet == 1 then
+        local sample_input = torch.randn(1, opt.input_nc, 2, 2)
+        local optnet = require 'optnet'
+        optnet.optimizeMemory(netG_A, sample_input, {inplace=true, reuseBuffers=true})
+        optnet.optimizeMemory(netG_B, sample_input, {inplace=true, reuseBuffers=true})
+      end
     else
       netG_A = util.load_model('G_A', opt)
       netG_B = util.load_model('G_B', opt)
