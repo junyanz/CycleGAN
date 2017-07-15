@@ -85,10 +85,10 @@ function CycleGANModel:Initialize(opt)
   if opt.test == 0 then
     local D_A_size = self.netD_A:forward(self.real_B):size()  -- hack: assume D_size_A = D_size_B
     self.fake_label_A = torch.Tensor(D_A_size):fill(0.0)
-    self.real_label_A = torch.Tensor(D_A_size):fill(0.9) -- no soft smoothing
+    self.real_label_A = torch.Tensor(D_A_size):fill(1.0) -- no soft smoothing
     local D_B_size = self.netD_B:forward(self.real_A):size()  -- hack: assume D_size_A = D_size_B
     self.fake_label_B = torch.Tensor(D_B_size):fill(0.0)
-    self.real_label_B = torch.Tensor(D_B_size):fill(0.9) -- no soft smoothing
+    self.real_label_B = torch.Tensor(D_B_size):fill(1.0) -- no soft smoothing
     self.optimStateD_A = self:InitializeStates()
     self.optimStateG_A = self:InitializeStates()
     self.optimStateD_B = self:InitializeStates()
