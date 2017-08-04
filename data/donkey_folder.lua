@@ -29,10 +29,9 @@ if not paths.dirp(opt.data) then
 end
 
 -- a cache file of the training metadata (if doesnt exist, will be created)
-local cache = "cache"
 local cache_prefix = opt.data:gsub('/', '_')
-os.execute('mkdir -p cache')
-local trainCache = paths.concat(cache, cache_prefix .. '_trainCache.t7')
+os.execute(('mkdir -p %s'):format(opt.cache_dir))
+local trainCache = paths.concat(opt.cache_dir, cache_prefix .. '_trainCache.t7')
 
 --------------------------------------------------------------------------------------------
 local input_nc = opt.nc -- input channels

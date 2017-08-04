@@ -34,6 +34,7 @@ local opt_train = {
    continue_train = 0,          -- if continue training, load the latest model: 1: true, 0: false
    serial_batches = 0,          -- if 1, takes images in order to make batches, otherwise takes them randomly
    checkpoints_dir = './checkpoints', -- models are saved here
+   cache_dir = './cache',             -- cache files are saved here
    cudnn = 1,                         -- set to 0 to not use cudnn
    which_model_netD = 'basic',        -- selects model to use for netD
    which_model_netG = 'resnet_6blocks',   -- selects model to use for netG
@@ -71,6 +72,7 @@ local opt_test = {
   serial_batches = 1,        -- if 1, takes images in order to make batches, otherwise takes them randomly
   cudnn = 1,                 -- set to 0 to not use cudnn (untested)
   checkpoints_dir = './checkpoints', -- loads models from here
+  cache_dir = './cache',             -- cache files are saved here
   results_dir='./results/',          -- saves results here
   which_epoch = 'latest',            -- which epoch to test? set to 'latest' to use latest cached model
   model = 'cycle_gan',               -- which mode to run. 'cycle_gan', 'pix2pix', 'bigan', 'content_gan'; to use pretrained model, select `one_direction_test`
@@ -118,7 +120,7 @@ function options.parse_options(mode)
   table.sort(keyset)
   print("------------------- Options -------------------")
   for i,k in ipairs(keyset) do
-    print(("%+25s: %s"):format(k, opt[k]))
+    print(('%+25s: %s'):format(k, opt[k]))
   end
   print("-----------------------------------------------")
 
