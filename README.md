@@ -197,12 +197,13 @@ Our model does not work well when the test image is rather different from the im
 If you use this code for your research, please cite our [paper](https://junyanz.github.io/CycleGAN/):
 
 ```
-@article{CycleGAN2017,
-  title={Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks},
+@inproceedings{CycleGAN2017,
+  title={Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networkss},
   author={Zhu, Jun-Yan and Park, Taesung and Isola, Phillip and Efros, Alexei A},
-  journal={arXiv preprint arXiv:1703.10593},
+  booktitle={Computer Vision (ICCV), 2017 IEEE International Conference on},
   year={2017}
 }
+
 ```
 
 
