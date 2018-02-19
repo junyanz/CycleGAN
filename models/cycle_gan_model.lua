@@ -180,10 +180,10 @@ function CycleGANModel:fGx_basic(x, gradParams, netG, netD, netE, real, real2, r
   -- G should be identity if real2 is fed.
   local errI = nil
   local identity = nil
-  if opt.identity > 0 then
+  if opt.lambda_identity > 0 then
     identity = netG:forward(real2):clone()
-    errI = self.criterionRec:forward(identity, real2)*lambda2*opt.identity
-    local didentity_loss_do = self.criterionRec:backward(identity, real2):mul(lambda2):mul(opt.identity)
+    errI = self.criterionRec:forward(identity, real2) * lambda2 * opt.lambda_identity
+    local didentity_loss_do = self.criterionRec:backward(identity, real2):mul(lambda2):mul(opt.lambda_identity)
     netG:backward(real2, didentity_loss_do)
   end
 
@@ -279,7 +279,7 @@ end
 
 -- returns a string that describes the display plot configuration
 function CycleGANModel:DisplayPlot(opt)
-  if opt.identity > 0 then
+  if opt.lambda_identity > 0 then
     return 'errG_A,errD_A,errRec_A,errI_A,errG_B,errD_B,errRec_B,errI_B'
   else
     return 'errG_A,errD_A,errRec_A,errG_B,errD_B,errRec_B'
@@ -311,13 +311,13 @@ function CycleGANModel:GetCurrentVisuals(opt, size)
   table.insert(visuals, {img=MakeIm3(self.real_A), label='real_A'})
   table.insert(visuals, {img=MakeIm3(self.fake_B), label='fake_B'})
   table.insert(visuals, {img=MakeIm3(self.rec_A), label='rec_A'})
-  if opt.test == 0 and opt.identity > 0 then
+  if opt.test == 0 and opt.lambda_identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_A), label='identity_A'})
   end
   table.insert(visuals, {img=MakeIm3(self.real_B), label='real_B'})
   table.insert(visuals, {img=MakeIm3(self.fake_A), label='fake_A'})
   table.insert(visuals, {img=MakeIm3(self.rec_B), label='rec_B'})
-  if opt.test == 0 and opt.identity > 0 then
+  if opt.test == 0 and opt.lambda_identity > 0 then
     table.insert(visuals, {img=MakeIm3(self.identity_B), label='identity_B'})
   end
   return visuals
