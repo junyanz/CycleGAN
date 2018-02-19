@@ -49,7 +49,7 @@ local opt_train = {
    align_data = 0,                -- if > 0, use the dataloader for where the images are aligned
    pool_size = 50,                -- the size of image buffer that stores previously generated images
    resize_or_crop = 'resize_and_crop',  -- resizing/cropping strategy: resize_and_crop | crop | scale_width | scale_height
-   lambda_identity = 0,                 -- use identity mapping. Setting opt.lambda_identity other than 1 has an effect of scaling the weight of the identity mapping loss. For example, if the weight of the identity loss should be 10 times smaller than the weight of the reconstruction loss, please set opt.lambda_identity = 0.1
+   lambda_identity = 0.5,                 -- use identity mapping. Setting opt.lambda_identity other than 0 has an effect of scaling the weight of the identity mapping loss. For example, if the weight of the identity loss should be 10 times smaller than the weight of the reconstruction loss, please set opt.lambda_identity = 0.1
    use_optnet = 0,                -- use optnet to save GPU memory during test
 }
 
