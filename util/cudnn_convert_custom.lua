@@ -46,6 +46,9 @@ function cudnn_convert_custom(net, dst, exclusion_fn)
         y.divide = true
         y.count_include_pad = v.mode == 'CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING'
       end
+      if src == nn and string.find(v, 'Convolution') then
+         y.groups = 1
+      end
       return y
     end
 
