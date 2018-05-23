@@ -86,7 +86,7 @@ bash ./pretrained_models/download_model.sh style_cezanne
 DATA_ROOT=./datasets/ae_photos name=style_cezanne_pretrained model=one_direction_test phase=test loadSize=256 fineSize=256 resize_or_crop="scale_width" th test.lua
 ```
 The test results will be saved to `./results/style_cezanne_pretrained/latest_test/index.html`.  
-Please refer to [Model Zoo](#Pre-trained-models) for more pre-trained models.
+Please refer to [Model Zoo](#model-zoo) for more pre-trained models.
 `./examples/test_vangogh_style_on_ae_photos.sh` is an example script that downloads the pretrained Van Gogh style network and runs it on Efros's photos.
 
 ### Train
